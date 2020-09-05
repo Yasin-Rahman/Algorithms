@@ -1,0 +1,145 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+
+  <title>Real Time OS Scheduling</title>
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="SitePoint">
+  <link rel="stylesheet" href="styles.css">
+
+</head>
+
+<body>
+
+  <form>
+    <div id="choose">
+      <select id="mySelect">
+        <option value="" selected disabled hidden>Select Algorithm</option>
+        <option value="edf">Earliest Deadline First</option>
+        <option value="rms">Rate-Monotonic Scheduling</option>
+        <option value="lst">Least Slack Time</option>
+      </select>
+    </div>
+
+    <br>
+
+    <h3>Task List</h3>
+    <div id="in">
+      <label for="per">Task ID:</label><br>
+      <input type="text" id="period"><br>
+    </div>
+    <div id="in">
+      <label for="ex">Execution Time:</label><br>
+      <input type="text" id="exec"><br>
+    </div>
+    <div id="in">
+      <label for="dead">Deadline:</label><br>
+      <input type="text" id="deadline"><br>
+    </div>
+    <div id="in">
+      <label for="sub"> </label><br>
+      <input type="submit" id="button" value="Add" onclick="handleData(); return false;"><br>
+    </div>
+
+  </form>
+
+  <div id="clear">&nbsp;</div>
+  <br>
+
+  <button id="button" onclick="run()">Run Simulation</button>
+  <br>
+  <br>
+
+  <button onclick="appendColumn()">ADD</button>
+  <br>
+  <br>
+
+  <div id="tbl">
+    <table id="t">
+      <tr id="rw"></tr>
+    </table>
+  </div>
+
+  <script>
+    function handleData() {
+      var x = +document.getElementById("period").value;
+      var y = +document.getElementById("exec").value;
+      var z = +document.getElementById("deadline").value;
+
+      try {
+        if (document.getElementById("mySelect").value == "edf") {
+          edfinsert(x, y, z);
+          //window.alert("EDF- Task Id: " + x + " Execution Time: " + y + " Deadline: " + z);
+          //window.alert(task_info_edf);
+        }
+      } catch (e) {
+        console.error(e.name + ': ' + e.message)
+      }
+
+      try {
+        if (document.getElementById("mySelect").value == "rms") {
+          rmsinsert(x, y, z);
+          //window.alert("RMS- Task Id: " + x + " Execution Time: " + y + " Deadline: " + z);
+          //window.alert(task_info_rms);
+        }
+      } catch (e) {
+        console.error(e.name + ': ' + e.message)
+      }
+
+      try {
+        if (document.getElementById("mySelect").value == "lst") {
+          lstinsert(x, y, z);
+          //window.alert("LST- Task Id: " + x + " Execution Time: " + y + " Deadline: " + z);
+          //window.alert(task_info_lst);
+        }
+      } catch (e) {
+        console.error(e.name + ': ' + e.message)
+      }
+      document.getElementById("period").value == "";
+      document.getElementById("exec").value == "";
+      document.getElementById("deadline").value == "";
+
+    }
+    function run() {
+      if (document.getElementById("mySelect").value == "edf") {
+        edf();
+      }
+      if (document.getElementById("mySelect").value == "rms") {
+        rms();
+      }
+      if (document.getElementById("mySelect").value == "lst") {
+        lst();
+      }
+    }
+  </script>
+
+  <script>
+
+    function tableCreate(color, text) {
+      var body = document.getElementById("rw");
+      //tbl  = document.createElement('table');
+      //tbl.style.width  = '100px';
+      //tbl.style.height  = '200px';
+      //var tr = body.insertRow();
+      var td = body.insertCell();
+      td.style.backgroundColor = color;
+      td.appendChild(document.createTextNode(text));
+      body.appendChild(td);
+    }
+
+  </script>
+
+
+
+  <script src="EDF_NEW.js" type="text/javascript"></script>
+  <script src="RMS_NEW.js" type="text/javascript"></script>
+  <script src="LST_NEW.js" type="text/javascript"></script>
+
+
+
+</body>
+
+</html>
